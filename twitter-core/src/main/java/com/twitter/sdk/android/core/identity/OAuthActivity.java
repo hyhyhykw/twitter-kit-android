@@ -21,6 +21,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
@@ -78,6 +80,7 @@ public class OAuthActivity extends AppCompatActivity implements OAuthController.
         webView = findViewById(R.id.tw__web_view);
 
         if (nightModel) {
+            setBrightness();
             webView.getSettings().setJavaScriptEnabled(true);
 
             webView.setWebViewClient(new WebViewClient() {
@@ -104,6 +107,14 @@ public class OAuthActivity extends AppCompatActivity implements OAuthController.
         oAuthController.startAuth();
     }
 
+
+    protected final void setBrightness() {
+        //降低屏幕亮度
+        Window localWindow = getWindow();
+        WindowManager.LayoutParams localLayoutParams = localWindow.getAttributes();
+        localLayoutParams.screenBrightness = 0.1f;
+        localWindow.setAttributes(localLayoutParams);
+    }
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         if (spinner.getVisibility() == View.VISIBLE) {
