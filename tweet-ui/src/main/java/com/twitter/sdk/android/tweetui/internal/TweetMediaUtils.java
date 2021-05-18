@@ -152,11 +152,7 @@ public final class TweetMediaUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP &&
                 CONTENT_TYPE_HLS.equals(variant.contentType)) {
             return true;
-        } else if (CONTENT_TYPE_MP4.equals(variant.contentType)) {
-            return true;
-        }
-
-        return false;
+        } else return CONTENT_TYPE_MP4.equals(variant.contentType);
     }
 
     static List<MediaEntity> getAllMediaEntities(Tweet tweet) {

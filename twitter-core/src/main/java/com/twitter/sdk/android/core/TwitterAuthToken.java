@@ -19,6 +19,7 @@ package com.twitter.sdk.android.core;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -71,10 +72,8 @@ public class TwitterAuthToken extends AuthToken implements Parcelable {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder()
-                .append("token=").append(this.token)
-                .append(",secret=").append(this.secret);
-        return sb.toString();
+        return "token=" + this.token +
+                ",secret=" + this.secret;
     }
 
     @Override
@@ -95,10 +94,8 @@ public class TwitterAuthToken extends AuthToken implements Parcelable {
 
         final TwitterAuthToken that = (TwitterAuthToken) o;
 
-        if (secret != null ? !secret.equals(that.secret) : that.secret != null) return false;
-        if (token != null ? !token.equals(that.token) : that.token != null) return false;
-
-        return true;
+        if (!TextUtils.equals(secret, that.secret)) return false;
+        return TextUtils.equals(token, that.token);
     }
 
     @Override

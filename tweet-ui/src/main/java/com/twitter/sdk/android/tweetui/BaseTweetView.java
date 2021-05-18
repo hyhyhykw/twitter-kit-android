@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.util.AttributeSet;
@@ -374,7 +375,7 @@ public abstract class BaseTweetView extends AbstractTweetView {
         final String formattedTimestamp;
         if (displayTweet != null && displayTweet.createdAt != null &&
                 TweetDateUtils.isValidTimestamp(displayTweet.createdAt)) {
-            final Long createdAtTimestamp
+            final long createdAtTimestamp
                     = TweetDateUtils.apiTimeToLong(displayTweet.createdAt);
             final String timestamp = TweetDateUtils.getRelativeTimeString(getResources(),
                     System.currentTimeMillis(),
@@ -433,8 +434,9 @@ public abstract class BaseTweetView extends AbstractTweetView {
                 final ImageView imageView = (ImageView) v;
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        imageView.getDrawable().setColorFilter(getResources().getColor(
+                        PorterDuffColorFilter colorFilter = new PorterDuffColorFilter(getResources().getColor(
                                 R.color.tw__black_opacity_10), PorterDuff.Mode.SRC_ATOP);
+                        imageView.getDrawable().setColorFilter(colorFilter);
                         imageView.invalidate();
                         break;
                     case MotionEvent.ACTION_UP:

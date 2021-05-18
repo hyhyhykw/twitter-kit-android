@@ -159,7 +159,7 @@ public class TwitterListTimeline extends BaseTimeline implements Timeline<Tweet>
          */
         public TwitterListTimeline build() {
             // user must provide either an id or slug, not both
-            if (!(listId == null ^ slug == null)) {
+            if ((listId == null) == (slug == null)) {
                 throw new IllegalStateException("must specify either a list id or slug/owner pair");
             }
 

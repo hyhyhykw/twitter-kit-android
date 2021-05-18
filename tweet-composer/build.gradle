@@ -19,11 +19,10 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
         versionCode 1
-        versionName version
+        versionName '3.3.0'
         minSdkVersion rootProject.minSdkVersion
     }
 
@@ -33,8 +32,7 @@ android {
             buildConfigField "String", "ARTIFACT_ID", "\"${pom_artifact_id}\""
             buildConfigField "String", "BUILD_NUMBER", "\"${buildNumber}\""
             buildConfigField "long", "BUILD_TIME", "${System.currentTimeMillis()}L"
-
-            testCoverageEnabled enableTestCodeCoverage
+            buildConfigField "String", "VERSION_NAME", "\"3.3.0\""
         }
 
         release {
@@ -42,6 +40,7 @@ android {
             buildConfigField "String", "ARTIFACT_ID", "\"${pom_artifact_id}\""
             buildConfigField "String", "BUILD_NUMBER", "\"${buildNumber}\""
             buildConfigField "long", "BUILD_TIME", "${System.currentTimeMillis()}L"
+            buildConfigField "String", "VERSION_NAME", "\"3.3.0\""
         }
     }
 
@@ -54,26 +53,48 @@ android {
         targetCompatibility rootProject.targetCompatibilityVersion
     }
 
-    testOptions {
-        unitTests.returnDefaultValues = true
-        unitTests.includeAndroidResources true
-    }
 }
 
 dependencies {
     api project(':twitter-core')
 
-    implementation dependency.picasso
-    implementation dependency.tweetText
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.github.twitter:twitter-text:3.1.0'
+}
 
-    androidTestCompile dependency.mockito
-    androidTestCompile dependency.dexmakerMockito
 
-    testCompile dependency.mockito
-    testCompile dependency.junit
-    testCompile dependency.retrofitMock
-    testCompile(dependency.robolectric) {
-        exclude group: 'commons-logging', module: 'commons-logging'
-        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
-    }
+apply plugin: 'com.github.dcendents.android-maven' // 添加这个
+group='com.github.hyhyhykw'	// 指定group，com.github.<用户名>
+
+
+// 指定编码
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+// 打包源码
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+
+    archiveClassifier.set('sources')
+//    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    failOnError  false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+}
+
+// 制作文档(Javadoc)
+task javadocJar(type: Jar, dependsOn: javadoc) {
+//    classifier = 'javadoc'
+    archiveClassifier.set('javadoc')
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
 }

@@ -19,8 +19,6 @@ package com.example.app.tweetui;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
@@ -39,6 +37,9 @@ import com.twitter.sdk.android.tweetui.TimelineResult;
 import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 
 import java.lang.ref.WeakReference;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 /**
  * TimelineActivity shows a full screen timeline which is useful for screenshots.

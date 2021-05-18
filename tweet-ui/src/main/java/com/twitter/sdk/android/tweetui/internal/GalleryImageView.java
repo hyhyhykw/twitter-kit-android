@@ -66,9 +66,10 @@ public class GalleryImageView extends FrameLayout implements Target {
     }
 
     @Override
-    public void onBitmapFailed(Drawable errorDrawable) {
+    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
 
     }
+
 
     @Override
     public void onPrepareLoad(Drawable placeHolderDrawable) {

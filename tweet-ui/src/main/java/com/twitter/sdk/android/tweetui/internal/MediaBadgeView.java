@@ -31,6 +31,8 @@ import com.twitter.sdk.android.core.models.Card;
 import com.twitter.sdk.android.core.models.MediaEntity;
 import com.twitter.sdk.android.tweetui.R;
 
+import androidx.core.content.ContextCompat;
+
 public class MediaBadgeView extends FrameLayout {
     TextView videoDuration;
     ImageView badge;
@@ -60,7 +62,7 @@ public class MediaBadgeView extends FrameLayout {
 
     public void setMediaEntity(MediaEntity entity) {
         if (TweetMediaUtils.GIF_TYPE.equals(entity.type)) {
-            setBadge(getResources().getDrawable(R.drawable.tw__gif_badge));
+            setBadge(ContextCompat.getDrawable(getContext(),R.drawable.tw__gif_badge));
         } else if (TweetMediaUtils.VIDEO_TYPE.equals(entity.type)) {
             final long duration = entity.videoInfo == null ? 0 : entity.videoInfo.durationMillis;
             setText(duration);
@@ -71,7 +73,7 @@ public class MediaBadgeView extends FrameLayout {
 
     public void setCard(Card card) {
         if (VineCardUtils.isVine(card)) {
-            setBadge(getResources().getDrawable(R.drawable.tw__vine_badge));
+            setBadge(ContextCompat.getDrawable(getContext(),R.drawable.tw__vine_badge));
         } else {
             setEmpty();
         }

@@ -40,12 +40,13 @@ public class SafeListAdapter implements TypeAdapterFactory {
                 delegate.write(out, value);
             }
 
+            @SuppressWarnings("unchecked")
             @Override
             public T read(JsonReader arg0) throws IOException {
                 final T t = delegate.read(arg0);
                 if (List.class.isAssignableFrom(tokenType.getRawType())) {
                     if (t == null) {
-                        return (T) Collections.EMPTY_LIST;
+                        return (T) Collections.emptyList();
                     }
 
                     final List<?> list = (List<?>) t;

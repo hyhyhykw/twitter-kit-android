@@ -279,9 +279,7 @@ abstract class AbstractTweetView extends RelativeLayout{
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void setText(Tweet displayTweet) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            contentView.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
-        }
+        contentView.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
         final CharSequence tweetText = Utils.charSeqOrEmpty(getLinkifiedText(displayTweet));
         SpanClickHandler.enableClicksOnSpans(contentView);
         if (!TextUtils.isEmpty(tweetText)) {

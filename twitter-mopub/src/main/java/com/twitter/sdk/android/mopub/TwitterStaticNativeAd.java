@@ -25,7 +25,6 @@ import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.RectShape;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
@@ -145,11 +144,7 @@ public class TwitterStaticNativeAd extends FrameLayout {
         layerDrawable.setLayerInset(0, 0, 0, 0, 0);
         layerDrawable.setLayerInset(1, 1, 0, 1, 0);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            cardLayout.setBackground(layerDrawable);
-        } else {
-            cardLayout.setBackgroundDrawable(layerDrawable);
-        }
+        cardLayout.setBackground(layerDrawable);
     }
 
     private void setCallToActionStyling() {
@@ -179,10 +174,6 @@ public class TwitterStaticNativeAd extends FrameLayout {
         unselectedItem.setColor(ctaBackgroundColor);
         stateListDrawable.addState(new int[]{}, unselectedItem);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            callToActionView.setBackground(stateListDrawable);
-        } else {
-            callToActionView.setBackgroundDrawable(stateListDrawable);
-        }
+        callToActionView.setBackground(stateListDrawable);
     }
 }

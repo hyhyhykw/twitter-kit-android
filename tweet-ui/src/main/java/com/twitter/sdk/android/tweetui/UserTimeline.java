@@ -43,7 +43,7 @@ public class UserTimeline extends BaseTimeline implements Timeline<Tweet> {
         this.screenName = screenName;
         this.maxItemsPerRequest = maxItemsPerRequest;
         // null includeReplies should default to false
-        this.includeReplies = includeReplies == null ? false : includeReplies;
+        this.includeReplies = includeReplies != null && includeReplies;
         this.includeRetweets = includeRetweets;
     }
 

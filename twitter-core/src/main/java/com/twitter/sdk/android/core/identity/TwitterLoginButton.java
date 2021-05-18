@@ -28,7 +28,6 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.View;
-import android.widget.Button;
 
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.R;
@@ -39,13 +38,16 @@ import com.twitter.sdk.android.core.internal.CommonUtils;
 
 import java.lang.ref.WeakReference;
 
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.ContextCompat;
+
 /**
  * Log in button for logging into Twitter. When the button is clicked, an authorization request
  * is started and the user is presented with a screen requesting access to the user's Twitter
  * account. If successful, a {@link com.twitter.sdk.android.core.TwitterSession} is provided
  * in the {@link com.twitter.sdk.android.core.Callback#success(com.twitter.sdk.android.core.Result)}
  */
-public class TwitterLoginButton extends Button {
+public class TwitterLoginButton extends AppCompatButton {
     static final String TAG = TwitterCore.TAG;
     static final String ERROR_MSG_NO_ACTIVITY = "TwitterLoginButton requires an activity."
             + " Override getActivity to provide the activity for this button.";
@@ -81,7 +83,7 @@ public class TwitterLoginButton extends Button {
     private void setupButton() {
         final Resources res = getResources();
         super.setCompoundDrawablesWithIntrinsicBounds(
-                res.getDrawable(R.drawable.tw__ic_logo_default), null, null, null);
+                ContextCompat.getDrawable(getActivity(),R.drawable.tw__ic_logo_default), null, null, null);
         super.setCompoundDrawablePadding(
                 res.getDimensionPixelSize(R.dimen.tw__login_btn_drawable_padding));
         super.setText(R.string.tw__login_btn_txt);
@@ -168,7 +170,7 @@ public class TwitterLoginButton extends Button {
             }
         }
 
-        private void checkCallback(Callback callback) {
+        private void checkCallback(Callback<TwitterSession> callback) {
             if (callback == null) {
                 CommonUtils.logOrThrowIllegalStateException(TwitterCore.TAG,
                         "Callback must not be null, did you call setCallback?");

@@ -18,7 +18,6 @@
 package com.twitter.sdk.android.tweetui;
 
 import android.os.Handler;
-import android.support.v4.util.LruCache;
 import android.text.TextUtils;
 
 import com.twitter.sdk.android.core.Callback;
@@ -32,6 +31,8 @@ import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.models.Tweet;
 
 import java.util.List;
+
+import androidx.collection.LruCache;
 
 
 /**
@@ -209,7 +210,7 @@ class TweetRepository {
      * Callback handles sorting Tweets before passing to the given callback on success. Handles
      * guest auto expired or failing tokens on failure.
      */
-    class MultiTweetsCallback extends Callback<List<Tweet>> {
+    static class MultiTweetsCallback extends Callback<List<Tweet>> {
         final Callback<List<Tweet>> cb;
         final List<Long> tweetIds;
 

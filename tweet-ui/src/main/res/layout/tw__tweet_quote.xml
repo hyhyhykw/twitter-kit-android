@@ -25,7 +25,6 @@
     <LinearLayout
         android:id="@+id/tw__author_attribution"
         style="@style/tw__QuoteAttributionLine"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true">
 
@@ -44,7 +43,6 @@
         android:id="@+id/tw__tweet_text"
         style="@style/tw__TweetText.Quote"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_below="@+id/tw__author_attribution"
         tools:text="just setting up my twttr" />
 
@@ -52,7 +50,6 @@
         android:id="@+id/tw__aspect_ratio_media_container"
         style="@style/tw__TweetMediaContainer.Quote"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_below="@id/tw__tweet_text">
 
         <com.twitter.sdk.android.tweetui.internal.TweetMediaView

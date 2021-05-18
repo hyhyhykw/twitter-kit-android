@@ -93,7 +93,7 @@ public class SearchTimeline extends BaseTimeline implements Timeline<Tweet> {
     /**
      * Wrapper callback which unpacks a Search API result into a TimelineResult (cursor and items).
      */
-    class SearchCallback extends Callback<Search> {
+    static class SearchCallback extends Callback<Search> {
         final Callback<TimelineResult<Tweet>> cb;
 
         /**

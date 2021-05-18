@@ -38,8 +38,7 @@ class FileUtils {
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     static String getPath(final Context context, final Uri uri) {
-        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-        if (isKitKat && isMediaDocumentAuthority(uri)) {
+        if (isMediaDocumentAuthority(uri)) {
             final String documentId = DocumentsContract.getDocumentId(uri); // e.g. "image:1234"
             final String[] parts = documentId.split(":");
             final String type = parts[0];
@@ -79,17 +78,11 @@ class FileUtils {
     }
 
     static String resolveFilePath(Context context, Uri uri, String selection, String[] args) {
-        Cursor cursor = null;
         final String[] projection = {MediaStore.Images.Media.DATA};
-        try {
-            cursor = context.getContentResolver().query(uri, projection, selection, args, null);
+        try (Cursor cursor = context.getContentResolver().query(uri, projection, selection, args, null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 final int i = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
                 return cursor.getString(i);
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
             }
         }
         return null;

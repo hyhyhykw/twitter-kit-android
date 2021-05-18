@@ -19,7 +19,6 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
         versionCode 1
@@ -67,15 +66,18 @@ android {
 }
 
 dependencies {
+//
+//    api ('com.mopub:mopub-sdk-native-static:4.11.0@aar') {
+//        transitive = true
+//    }
 
-    api (dependency.mopub) {
+    api('com.mopub:mopub-sdk:5.17.0@aar') {
         transitive = true
     }
-
-    testCompile dependency.mockito
-    testCompile dependency.junit
-    testCompile(dependency.robolectric) {
-        exclude group: 'commons-logging', module: 'commons-logging'
-        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
-    }
+//    testCompile dependency.mockito
+//    testCompile dependency.junit
+//    testCompile(dependency.robolectric) {
+//        exclude group: 'commons-logging', module: 'commons-logging'
+//        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+//    }
 }

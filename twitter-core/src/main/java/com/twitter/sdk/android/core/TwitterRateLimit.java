@@ -40,11 +40,11 @@ public class TwitterRateLimit  {
         }
         for (int i = 0; i < headers.size(); i++) {
             if (LIMIT_KEY.equals(headers.name(i))) {
-                requestLimit = Integer.valueOf(headers.value(i));
+                requestLimit = Integer.parseInt(headers.value(i));
             } else if (REMAINING_KEY.equals(headers.name(i))) {
-                remainingRequest = Integer.valueOf(headers.value(i));
+                remainingRequest = Integer.parseInt(headers.value(i));
             } else if (RESET_KEY.equals(headers.name(i))) {
-                resetSeconds = Long.valueOf(headers.value(i));
+                resetSeconds = Long.parseLong(headers.value(i));
             }
         }
     }

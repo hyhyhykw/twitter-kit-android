@@ -19,11 +19,10 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
         versionCode 1
-        versionName version
+        versionName "3.3.0"
         minSdkVersion rootProject.minSdkVersion
     }
 
@@ -50,9 +49,6 @@ android {
         targetCompatibility rootProject.targetCompatibilityVersion
     }
 
-    testOptions {
-        unitTests.returnDefaultValues = true
-    }
 }
 
 ext.projectDependencies = [
@@ -62,14 +58,51 @@ ext.projectDependencies = [
 ]
 
 dependencies {
-    compile project(':twitter-core')
-    compile project(':tweet-composer')
-    compile project(':tweet-ui')
+    api project(':twitter-core')
+    api project(':tweet-composer')
+    api project(':tweet-ui')
 
-    testCompile dependency.mockito
-    testCompile dependency.junit
-    testCompile(dependency.robolectric) {
-        exclude group: 'commons-logging', module: 'commons-logging'
-        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
-    }
+//    testCompile dependency.mockito
+//    testCompile dependency.junit
+//    testCompile(dependency.robolectric) {
+//        exclude group: 'commons-logging', module: 'commons-logging'
+//        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+//    }
+}
+
+
+apply plugin: 'com.github.dcendents.android-maven' // 添加这个
+group='com.github.hyhyhykw'	// 指定group，com.github.<用户名>
+
+
+// 指定编码
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+// 打包源码
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+
+    archiveClassifier.set('sources')
+//    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    failOnError  false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+}
+
+// 制作文档(Javadoc)
+task javadocJar(type: Jar, dependsOn: javadoc) {
+//    classifier = 'javadoc'
+    archiveClassifier.set('javadoc')
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
 }

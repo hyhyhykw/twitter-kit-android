@@ -23,8 +23,8 @@ import com.twitter.sdk.android.core.TwitterAuthToken;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.internal.network.UrlUtils;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -76,7 +76,7 @@ class OAuth1aParameters {
     }
 
     private String getNonce() {
-        return String.valueOf(System.nanoTime()) + String.valueOf(Math.abs(RAND.nextLong()));
+        return System.nanoTime() + String.valueOf(Math.abs(RAND.nextLong()));
     }
 
     private String getTimestamp() {
@@ -107,13 +107,11 @@ class OAuth1aParameters {
 
         // Construct the signature base.
         final String baseUrl = uri.getScheme() + "://" + uri.getHost() + uri.getPath();
-        final StringBuilder sb = new StringBuilder()
-                .append(method.toUpperCase(Locale.ENGLISH))
-                .append('&')
-                .append(UrlUtils.percentEncode(baseUrl))
-                .append('&')
-                .append(getEncodedQueryParams(params));
-        return sb.toString();
+        return method.toUpperCase(Locale.ENGLISH) +
+                '&' +
+                UrlUtils.percentEncode(baseUrl) +
+                '&' +
+                getEncodedQueryParams(params);
     }
 
     private String getEncodedQueryParams(TreeMap<String, String> params) {
@@ -137,20 +135,14 @@ class OAuth1aParameters {
             final String key = getSigningKey();
             // Calculate the signature by passing both the signature base and signing key to the
             // HMAC-SHA1 hashing algorithm
-            final byte[] signatureBaseBytes = signatureBase.getBytes(UrlUtils.UTF8);
-            final byte[] keyBytes = key.getBytes(UrlUtils.UTF8);
+            final byte[] signatureBaseBytes = signatureBase.getBytes(StandardCharsets.UTF_8);
+            final byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
             final SecretKey secretKey = new SecretKeySpec(keyBytes, "HmacSHA1");
             final Mac mac = Mac.getInstance("HmacSHA1");
             mac.init(secretKey);
             final byte[] signatureBytes = mac.doFinal(signatureBaseBytes);
             return ByteString.of(signatureBytes, 0, signatureBytes.length).base64();
-        } catch (InvalidKeyException e) {
-            Twitter.getLogger().e(TwitterCore.TAG, "Failed to calculate signature", e);
-            return "";
-        } catch (NoSuchAlgorithmException e) {
-            Twitter.getLogger().e(TwitterCore.TAG, "Failed to calculate signature", e);
-            return "";
-        } catch (UnsupportedEncodingException e) {
+        } catch (InvalidKeyException | NoSuchAlgorithmException e) {
             Twitter.getLogger().e(TwitterCore.TAG, "Failed to calculate signature", e);
             return "";
         }
@@ -158,11 +150,9 @@ class OAuth1aParameters {
 
     private String getSigningKey() {
         final String tokenSecret = authToken != null ? authToken.secret : null;
-        return new StringBuilder()
-                .append(UrlUtils.urlEncode(authConfig.getConsumerSecret()))
-                .append('&')
-                .append(UrlUtils.urlEncode(tokenSecret))
-                .toString();
+        return UrlUtils.urlEncode(authConfig.getConsumerSecret()) +
+                '&' +
+                UrlUtils.urlEncode(tokenSecret);
     }
 
     String constructAuthorizationHeader(String nonce, String timestamp, String signature) {

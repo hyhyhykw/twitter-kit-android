@@ -51,15 +51,15 @@ public class Session<T extends AuthToken> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        final Session session = (Session) o;
+        final Session<?> session = (Session<?>) o;
 
         if (id != session.id) return false;
-        return authToken != null ? authToken.equals(session.authToken) : session.authToken == null;
+        return authToken.equals(session.authToken);
     }
 
     @Override
     public int hashCode() {
-        int result = authToken != null ? authToken.hashCode() : 0;
+        int result = authToken.hashCode();
         result = 31 * result + (int) (id ^ (id >>> 32));
         return result;
     }

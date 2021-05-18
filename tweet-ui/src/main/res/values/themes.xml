@@ -16,9 +16,12 @@
   -->
 
 <resources>
-    <style name="MediaTheme" parent="@android:style/Theme.Holo">
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
+<!--    <style name="MediaTheme" parent="@android:style/Theme.Holo">-->
+<!--        <item name="android:windowActionBar">false</item>-->
+<!--        <item name="android:windowNoTitle">true</item>-->
+<!--        <item name="android:windowBackground">@android:color/black</item>-->
+<!--    </style>-->
+    <style name="MediaTheme" parent="@android:style/Theme.Material.NoActionBar" >
         <item name="android:windowBackground">@android:color/black</item>
     </style>
 </resources>

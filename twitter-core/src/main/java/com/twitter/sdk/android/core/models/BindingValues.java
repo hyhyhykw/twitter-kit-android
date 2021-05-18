@@ -28,7 +28,7 @@ public class BindingValues {
     private final Map<String, Object> bindingValues;
 
     public BindingValues() {
-        this(Collections.EMPTY_MAP);
+        this(Collections.emptyMap());
     }
 
     public BindingValues(Map<String, Object> bindingValues) {
@@ -46,6 +46,7 @@ public class BindingValues {
      * Returns the value for the specified key. Returns {@code null} if key does not exist, or
      * object cannot be cast to return type.
      */
+    @SuppressWarnings("unchecked")
     public <T> T get(String key) {
         try {
             return (T) bindingValues.get(key);

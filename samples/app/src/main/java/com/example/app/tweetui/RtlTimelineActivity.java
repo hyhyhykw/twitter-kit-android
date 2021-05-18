@@ -4,9 +4,6 @@ import android.annotation.TargetApi;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
-import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +13,10 @@ import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 import com.twitter.sdk.android.tweetui.UserTimeline;
 
 import java.util.Locale;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.ListFragment;
 
 public class RtlTimelineActivity extends TweetUiActivity {
     final Locale deviceLocale = Locale.getDefault();
@@ -29,9 +30,7 @@ public class RtlTimelineActivity extends TweetUiActivity {
             actionBar.setTitle(R.string.rtl_timeline);
         }
 
-        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            findViewById(android.R.id.content).setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-        }
+        findViewById(android.R.id.content).setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
     }
 
     @Override

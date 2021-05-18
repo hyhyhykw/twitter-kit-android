@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 
+@SuppressWarnings("unchecked")
 public class SafeMapAdapter implements TypeAdapterFactory {
 
     @Override
@@ -45,7 +46,7 @@ public class SafeMapAdapter implements TypeAdapterFactory {
                 final T t = delegate.read(arg0);
                 if (Map.class.isAssignableFrom(tokenType.getRawType())) {
                     if (t == null) {
-                        return (T) Collections.EMPTY_MAP;
+                        return (T) Collections.emptyMap();
                     }
 
                     final Map<?, ?> map = (Map<?, ?>) t;

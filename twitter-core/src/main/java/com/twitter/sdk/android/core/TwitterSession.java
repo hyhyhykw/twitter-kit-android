@@ -61,7 +61,7 @@ public class TwitterSession extends Session<TwitterAuthToken> {
 
         final TwitterSession that = (TwitterSession) o;
 
-        return userName != null ? userName.equals(that.userName) : that.userName == null;
+        return TextUtils.equals(userName, that.userName);
 
     }
 

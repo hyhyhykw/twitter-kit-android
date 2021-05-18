@@ -90,7 +90,7 @@ public class TwitterApiException extends TwitterException {
         try {
             // The response buffer can only be read once, so we clone the underlying buffer so the
             // response can be consumed down stream if necessary.
-            final String body = response.errorBody().source().buffer().clone().readUtf8();
+            final String body = response.errorBody().source().getBuffer().clone().readUtf8();
             if (!TextUtils.isEmpty(body)) {
                 return parseApiError(body);
             }

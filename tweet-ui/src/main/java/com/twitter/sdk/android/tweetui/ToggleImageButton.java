@@ -22,6 +22,8 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.ImageButton;
 
+import androidx.appcompat.widget.AppCompatImageButton;
+
 /**
  * Display on/off states (ie: Favorite or Retweet action buttons) as an {@link ImageButton}.
  *
@@ -36,7 +38,7 @@ import android.widget.ImageButton;
  * @attr ref android.R.styleable#ToggleImageButton_contentDescriptionff
  * @attr ref android.R.styleable#ToggleImageButton_toggleOnClick
  */
-public class ToggleImageButton extends ImageButton {
+public class ToggleImageButton extends AppCompatImageButton {
     private static final int[] STATE_TOGGLED_ON = {R.attr.state_toggled_on};
 
     boolean isToggledOn;

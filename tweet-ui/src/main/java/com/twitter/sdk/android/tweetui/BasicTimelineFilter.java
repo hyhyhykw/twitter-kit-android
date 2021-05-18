@@ -195,7 +195,7 @@ public class BasicTimelineFilter implements TimelineFilter {
 
         final char firstChar = hashtag.charAt(0);
         if (firstChar == '#' || firstChar == '\uFF03' || firstChar == '$') {
-            hashtag = hashtag.substring(1, hashtag.length());
+            hashtag = hashtag.substring(1);
         }
 
         return hashtag;
@@ -208,7 +208,7 @@ public class BasicTimelineFilter implements TimelineFilter {
 
         final char firstChar = handle.charAt(0);
         if (firstChar == '@' || firstChar == '\uFF20') {
-            handle = handle.substring(1, handle.length());
+            handle = handle.substring(1);
         }
 
         return handle.toLowerCase(Locale.US);

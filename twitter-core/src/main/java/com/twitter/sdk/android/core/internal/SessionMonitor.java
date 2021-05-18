@@ -22,6 +22,7 @@ import android.text.format.DateUtils;
 
 import com.twitter.sdk.android.core.Session;
 import com.twitter.sdk.android.core.SessionManager;
+import com.twitter.sdk.android.core.TwitterAuthToken;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -31,13 +32,13 @@ import java.util.concurrent.ExecutorService;
  * A session monitor for validating sessions.
  * @param <T>
  */
-public class SessionMonitor<T extends Session> {
+public class SessionMonitor<T extends Session<TwitterAuthToken>> {
     protected final MonitorState monitorState;
 
     private final SystemCurrentTimeProvider time;
     private final SessionManager<T> sessionManager;
     private final ExecutorService executorService;
-    private final SessionVerifier sessionVerifier;
+    private final SessionVerifier<T> sessionVerifier;
 
     /**
      * @param sessionManager A user auth based session manager
@@ -50,7 +51,7 @@ public class SessionMonitor<T extends Session> {
     }
 
     SessionMonitor(SessionManager<T> sessionManager, SystemCurrentTimeProvider time,
-            ExecutorService executorService, MonitorState monitorState, SessionVerifier
+            ExecutorService executorService, MonitorState monitorState, SessionVerifier<T>
             sessionVerifier) {
         this.time = time;
         this.sessionManager = sessionManager;
@@ -78,7 +79,7 @@ public class SessionMonitor<T extends Session> {
      * runnable that does the verification in a background thread.
      */
     public void triggerVerificationIfNecessary() {
-        final Session session = sessionManager.getActiveSession();
+        final Session<TwitterAuthToken> session = sessionManager.getActiveSession();
         final long currentTime = time.getCurrentTimeMillis();
         final boolean startVerification = session != null &&
                 monitorState.beginVerification(currentTime);

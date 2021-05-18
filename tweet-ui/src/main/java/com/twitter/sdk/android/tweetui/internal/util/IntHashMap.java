@@ -234,10 +234,9 @@ public class IntHashMap {
      */
     public boolean containsKey(int key) {
         final Entry[] tab = table;
-        final int hash = key;
-        final int index = (hash & 0x7FFFFFFF) % tab.length;
+        final int index = (key & 0x7FFFFFFF) % tab.length;
         for (Entry e = tab[index]; e != null; e = e.next) {
-            if (e.hash == hash) {
+            if (e.hash == key) {
                 return true;
             }
         }
@@ -257,10 +256,9 @@ public class IntHashMap {
      */
     public Object get(int key) {
         final Entry[] tab = table;
-        final int hash = key;
-        final int index = (hash & 0x7FFFFFFF) % tab.length;
+        final int index = (key & 0x7FFFFFFF) % tab.length;
         for (Entry e = tab[index]; e != null; e = e.next) {
-            if (e.hash == hash) {
+            if (e.hash == key) {
                 return e.value;
             }
         }
@@ -319,10 +317,9 @@ public class IntHashMap {
     public Object put(int key, Object value) {
         // Makes sure the key is not already in the hashtable.
         Entry[] tab = table;
-        final int hash = key;
-        int index = (hash & 0x7FFFFFFF) % tab.length;
+        int index = (key & 0x7FFFFFFF) % tab.length;
         for (Entry e = tab[index]; e != null; e = e.next) {
-            if (e.hash == hash) {
+            if (e.hash == key) {
                 final Object old = e.value;
                 e.value = value;
                 return old;
@@ -334,11 +331,11 @@ public class IntHashMap {
             rehash();
 
             tab = table;
-            index = (hash & 0x7FFFFFFF) % tab.length;
+            index = (key & 0x7FFFFFFF) % tab.length;
         }
 
         // Creates the new entry.
-        final Entry e = new Entry(hash, key, value, tab[index]);
+        final Entry e = new Entry(key, key, value, tab[index]);
         tab[index] = e;
         count++;
         return null;
@@ -358,10 +355,9 @@ public class IntHashMap {
      */
     public Object remove(int key) {
         final Entry[] tab = table;
-        final int hash = key;
-        final int index = (hash & 0x7FFFFFFF) % tab.length;
+        final int index = (key & 0x7FFFFFFF) % tab.length;
         for (Entry e = tab[index], prev = null; e != null; prev = e, e = e.next) {
-            if (e.hash == hash) {
+            if (e.hash == key) {
                 if (prev != null) {
                     prev.next = e.next;
                 } else {

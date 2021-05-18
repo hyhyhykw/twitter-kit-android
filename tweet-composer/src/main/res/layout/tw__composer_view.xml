@@ -45,7 +45,6 @@
             style="@style/tw__ComposerAvatar"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             tools:background="@color/tw__composer_light_gray"
             tools:ignore="ContentDescription"/>
     </RelativeLayout>

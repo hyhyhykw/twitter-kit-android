@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import com.twitter.Validator;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterApiClient;
@@ -29,6 +28,8 @@ import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.models.User;
+import com.twitter.twittertext.TwitterTextParser;
+import com.twitter.twittertext.Validator;
 
 import static com.twitter.sdk.android.tweetcomposer.TweetUploadService.TWEET_COMPOSE_CANCEL;
 
@@ -75,6 +76,7 @@ class ComposerController {
     }
 
     void setProfilePhoto() {
+
         dependencyProvider.getApiClient(session).getAccountService()
                 .verifyCredentials(false, true, false).enqueue(new Callback<User>() {
                     @Override
@@ -144,7 +146,8 @@ class ComposerController {
             return 0;
         }
 
-        return dependencyProvider.getTweetValidator().getTweetLength(text);
+
+        return TwitterTextParser.parseTweet(text).weightedLength;
     }
 
     void sendCancelBroadcast() {

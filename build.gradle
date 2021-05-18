@@ -20,22 +20,25 @@ apply from: rootProject.file('dependencies.gradle')
 subprojects { Project subproject ->
     buildscript {
         repositories {
-            jcenter()
+            mavenCentral()
             google()
             maven { url 'https://maven.fabric.io/public' }
         }
         dependencies {
-            classpath dependency.androidGradlePlugin
+//            classpath dependency.androidGradlePlugin
+            classpath 'com.android.tools.build:gradle:4.2.1'
+            classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         }
     }
 
     repositories {
         google()
-        jcenter()
+        maven { url 'https://jitpack.io' }
+        mavenCentral()
     }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.2.1'
-}
+//task wrapper(type: Wrapper) {
+//    gradleVersion = '4.2.1'
+//}
 

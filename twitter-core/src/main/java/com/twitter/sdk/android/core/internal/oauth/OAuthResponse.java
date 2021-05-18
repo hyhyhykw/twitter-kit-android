@@ -65,11 +65,9 @@ public class OAuthResponse implements Parcelable {
 
     @Override
     public String toString() {
-        return new StringBuilder()
-                .append("authToken=").append(authToken)
-                .append(",userName=").append(userName)
-                .append(",userId=").append(userId)
-                .toString();
+        return "authToken=" + authToken +
+                ",userName=" + userName +
+                ",userId=" + userId;
     }
 
     @Override

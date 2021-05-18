@@ -25,22 +25,22 @@ import java.util.Map;
  * Provides HTML and XML entity utilities.
  * </p>
  *
- * @see <a
- *      href="http://hotwired.lycos.com/webmonkey/reference/special_characters/">ISO
- *      Entities</a>
- * @see </br><a href="http://www.w3.org/TR/REC-html32#latin1">HTML 3.2 Character
- *      Entities for ISO Latin-1</a>
- * @see </br><a href="http://www.w3.org/TR/REC-html40/sgml/entities.html">HTML
- *      4.0 Character entity references</a>
- * @see </br><a href="http://www.w3.org/TR/html401/charset.html#h-5.3">HTML 4.01
- *      Character References</a>
- * @see </br><a
- *      href="http://www.w3.org/TR/html401/charset.html#code-position">HTML 4.01
- *      Code positions</a>
  * @author <a href="mailto:alex@purpletech.com">Alexander Day Chaffee</a>
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
- * @since 2.0
  * @version $Id: Entities.java,v 1.17 2004/02/18 22:59:50 ggregory Exp $
+ * @see <a
+ * href="http://hotwired.lycos.com/webmonkey/reference/special_characters/">ISO
+ * Entities</a>
+ * @see </br><a href="http://www.w3.org/TR/REC-html32#latin1">HTML 3.2 Character
+ * Entities for ISO Latin-1</a>
+ * @see </br><a href="http://www.w3.org/TR/REC-html40/sgml/entities.html">HTML
+ * 4.0 Character entity references</a>
+ * @see </br><a href="http://www.w3.org/TR/html401/charset.html#h-5.3">HTML 4.01
+ * Character References</a>
+ * @see </br><a
+ * href="http://www.w3.org/TR/html401/charset.html#code-position">HTML 4.01
+ * Code positions</a>
+ * @since 2.0
  */
 public class HtmlEntities {
     /**
@@ -904,12 +904,10 @@ public class HtmlEntities {
     }
 
     static class PrimitiveEntityMap implements EntityMap {
-        @SuppressWarnings("unchecked")
-        private final Map mapNameToValue = new HashMap();
+        private final Map<String, Integer> mapNameToValue = new HashMap<>();
 
         private final IntHashMap mapValueToName = new IntHashMap();
 
-        @SuppressWarnings("unchecked")
         public void add(String name, int value) {
             mapNameToValue.put(name, value);
             mapValueToName.put(value, name);
@@ -920,11 +918,11 @@ public class HtmlEntities {
         }
 
         public int value(String name) {
-            final Object value = mapNameToValue.get(name);
+            final Integer value = mapNameToValue.get(name);
             if (value == null) {
                 return -1;
             }
-            return ((Integer) value).intValue();
+            return value;
         }
     }
 
@@ -1019,8 +1017,7 @@ public class HtmlEntities {
                         try {
                             if (charAt1 == 'x' || charAt1 == 'X') {
                                 if (entityNameLength > 2) {
-                                    entityValue = Integer.valueOf(entityName.substring(2), 16)
-                                            .intValue();
+                                    entityValue = Integer.valueOf(entityName.substring(2), 16);
                                 }
                             } else {
                                 entityValue = Integer.parseInt(entityName.substring(1));
@@ -1041,7 +1038,7 @@ public class HtmlEntities {
                     }
                 } else {
                     buf.append((char) (entityValue));
-                    indices.add(new int[] { i, semi });
+                    indices.add(new int[]{i, semi});
                     i = semi;
                 }
             } else {

@@ -202,8 +202,7 @@ public class SwipeToDismissTouchListener implements View.OnTouchListener {
         final float maxDistance = closeThreshold * 2f;
         final double tension = Math.pow(distance, 2);
         final double maxTension = Math.pow(maxDistance, 2);
-        final double tensionCoeff = 1 - (tension / maxTension);
-        return tensionCoeff;
+        return 1 - (tension / maxTension);
     }
 
     float bound(float y) {

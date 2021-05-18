@@ -23,11 +23,13 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+import androidx.appcompat.widget.AppCompatImageView;
+
 /**
  * An ImageView subclass that take a {@link android.graphics.drawable.Drawable} and draws it on top
  * the ImageView content.
  */
-public class OverlayImageView extends ImageView {
+public class OverlayImageView extends AppCompatImageView {
     Overlay overlay = new Overlay(null);
 
     public OverlayImageView(Context context) {

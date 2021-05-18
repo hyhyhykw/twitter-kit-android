@@ -45,7 +45,9 @@
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:singleLine">true</item>
     </style>
-
+    <style name="tw__TweetFullName" parent="tw__TweetFullNameBase">
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
     <style name="tw__TweetFullNameBase" parent="tw__AttributionText" tools:ignore="NewApi">
         <item name="android:layout_marginTop">@dimen/tw__tweet_full_name_margin_top</item>
         <item name="android:layout_marginRight">@dimen/tw__tweet_full_name_margin_right</item>
@@ -57,9 +59,9 @@
         <item name="android:importantForAccessibility">no</item>
     </style>
 
-    <style name="tw__TweetFullName" parent="tw__TweetFullNameBase">
-        <item name="android:textStyle">bold</item>
-    </style>
+<!--    <style name="tw__TweetFullName" parent="tw__TweetFullNameBase">-->
+<!--        <item name="android:textStyle">bold</item>-->
+<!--    </style>-->
 
     <!--ScreenName should ellipsize, name and timestamp should not ellipsize-->
     <style name="tw__TweetScreenName" parent="tw__AttributionText"

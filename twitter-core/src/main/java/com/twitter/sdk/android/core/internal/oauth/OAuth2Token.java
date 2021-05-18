@@ -19,6 +19,7 @@ package com.twitter.sdk.android.core.internal.oauth;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 import com.twitter.sdk.android.core.AuthToken;
@@ -98,12 +99,9 @@ public class OAuth2Token extends AuthToken implements Parcelable {
 
         final OAuth2Token that = (OAuth2Token) o;
 
-        if (accessToken != null ? !accessToken.equals(that.accessToken) : that.accessToken != null)
+        if (!TextUtils.equals(accessToken, that.accessToken))
             return false;
-        if (tokenType != null ? !tokenType.equals(that.tokenType) : that.tokenType != null)
-            return false;
-
-        return true;
+        return TextUtils.equals(tokenType, that.tokenType);
     }
 
     @Override

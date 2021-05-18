@@ -23,7 +23,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -47,6 +46,8 @@ import com.twitter.sdk.android.tweetui.TweetUi;
 import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.List;
+
+import androidx.core.content.ContextCompat;
 
 public class TweetMediaView extends ViewGroup implements View.OnClickListener {
 
@@ -139,8 +140,7 @@ public class TweetMediaView extends ViewGroup implements View.OnClickListener {
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        if (internalRoundedCornersEnabled &&
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+        if (internalRoundedCornersEnabled) {
             final int saveState = canvas.save();
             canvas.clipPath(path);
             super.dispatchDraw(canvas);
@@ -390,8 +390,8 @@ public class TweetMediaView extends ViewGroup implements View.OnClickListener {
 
     void setOverlayImage(OverlayImageView imageView, boolean isVideo) {
         if (isVideo) {
-            imageView.setOverlayDrawable(getContext().getResources()
-                    .getDrawable(R.drawable.tw__player_overlay));
+            imageView.setOverlayDrawable(ContextCompat
+                    .getDrawable(getContext(),R.drawable.tw__player_overlay));
         } else {
             imageView.setOverlayDrawable(null);
         }
@@ -429,7 +429,10 @@ public class TweetMediaView extends ViewGroup implements View.OnClickListener {
         }
 
         @Override
-        public void onError() { /* intentionally blank */ }
+        public void onError(Exception e) {
+            /* intentionally blank */
+        }
+
     }
 
     static class Size {

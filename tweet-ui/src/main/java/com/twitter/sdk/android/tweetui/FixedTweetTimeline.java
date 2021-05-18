@@ -38,7 +38,7 @@ public class FixedTweetTimeline extends BaseTimeline implements Timeline<Tweet> 
         // always return the same fixed set of 'latest' Tweets
         final TimelineResult<Tweet> timelineResult
                 = new TimelineResult<>(new TimelineCursor(tweets), tweets);
-        cb.success(new Result(timelineResult, null));
+        cb.success(new Result<>(timelineResult, null));
     }
 
     @Override
@@ -46,7 +46,7 @@ public class FixedTweetTimeline extends BaseTimeline implements Timeline<Tweet> 
         final List<Tweet> empty = Collections.emptyList();
         final TimelineResult<Tweet> timelineResult = new TimelineResult<>(new TimelineCursor(empty),
                 empty);
-        cb.success(new Result(timelineResult, null));
+        cb.success(new Result<>(timelineResult, null));
     }
 
     /**

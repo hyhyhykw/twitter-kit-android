@@ -48,7 +48,7 @@ public class CollectionTimeline extends BaseTimeline implements Timeline<Tweet> 
         if (collectionId == null) {
             this.collectionIdentifier = null;
         } else {
-            this.collectionIdentifier = COLLECTION_PREFIX + Long.toString(collectionId);
+            this.collectionIdentifier = COLLECTION_PREFIX + collectionId;
         }
         this.twitterCore = twitterCore;
         this.maxItemsPerRequest = maxItemsPerRequest;
@@ -85,7 +85,7 @@ public class CollectionTimeline extends BaseTimeline implements Timeline<Tweet> 
     /**
      * Wrapper callback which unpacks a TwitterCollection into a TimelineResult (cursor and items).
      */
-    class CollectionCallback extends Callback<TwitterCollection> {
+    static class CollectionCallback extends Callback<TwitterCollection> {
         final Callback<TimelineResult<Tweet>> cb;
 
         /**
@@ -104,10 +104,10 @@ public class CollectionTimeline extends BaseTimeline implements Timeline<Tweet> 
             if (timelineCursor != null) {
                 timelineResult = new TimelineResult<>(timelineCursor, tweets);
             } else {
-                timelineResult = new TimelineResult<>(null, Collections.<Tweet>emptyList());
+                timelineResult = new TimelineResult<>(null, Collections.emptyList());
             }
             if (cb != null) {
-                cb.success(new Result(timelineResult, result.response));
+                cb.success(new Result<>(timelineResult, result.response));
             }
         }
 

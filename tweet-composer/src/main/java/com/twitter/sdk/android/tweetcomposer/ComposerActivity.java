@@ -23,9 +23,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.twitter.Regex;
 import com.twitter.sdk.android.core.TwitterAuthToken;
 import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.twittertext.Regex;
 
 public class ComposerActivity extends Activity {
     static final String EXTRA_USER_TOKEN = "EXTRA_USER_TOKEN";
