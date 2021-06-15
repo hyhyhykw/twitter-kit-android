@@ -19,10 +19,12 @@ package com.twitter.sdk.android.core.identity;
 
 import android.net.http.SslError;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.orhanobut.hawk.Hawk;
 import com.twitter.sdk.android.core.internal.network.UrlUtils;
 
 import java.net.URI;
@@ -40,14 +42,34 @@ class OAuthWebViewClient extends WebViewClient {
     private final String completeUrl;
     private final Listener listener;
 
+    private final boolean nightModel;
     OAuthWebViewClient(String completeUrl, Listener listener) {
         this.completeUrl = completeUrl;
         this.listener = listener;
+         nightModel = isNightModel();
     }
+
+
+    public static final String BRIGHTNESS = "brightness";
+    public static final String DAY = "day";
+    public static final String NIGHT = "night";
+
+
+    public static final String INVERT_JS =
+            "document.body.style.backgroundColor=\"#19191F\";document.body.style.color=\"#CCCCCC\";";
+
+
+    public static boolean isNightModel() {
+        return TextUtils.equals(Hawk.get(BRIGHTNESS, DAY), NIGHT);
+    }
+
 
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
+        if (nightModel){
+            view.post(() -> view.evaluateJavascript(INVERT_JS, null));
+        }
         listener.onPageFinished(view, url);
     }
 

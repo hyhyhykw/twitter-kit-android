@@ -19,16 +19,13 @@ package com.twitter.sdk.android.core.identity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.blankj.utilcode.util.BarUtils;
-import com.orhanobut.hawk.Hawk;
 import com.twitter.sdk.android.core.R;
 import com.twitter.sdk.android.core.TwitterAuthException;
 import com.twitter.sdk.android.core.TwitterCore;
@@ -56,40 +53,18 @@ public class OAuthActivity extends AppCompatActivity implements OAuthController.
     private ProgressBar spinner;
     private WebView webView;
 
-    public static final String BRIGHTNESS = "brightness";
-    public static final String DAY = "day";
-    public static final String NIGHT = "night";
-
-
-    public static final String INVERT_JS =
-            "document.body.style.backgroundColor=\"#19191F\";document.body.style.color=\"#CCCCCC\";";
-
-
-    public static boolean isNightModel() {
-        return TextUtils.equals(Hawk.get(BRIGHTNESS, DAY), NIGHT);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tw__activity_oauth);
 
-        boolean nightModel = isNightModel();
+        boolean nightModel = OAuthWebViewClient.isNightModel();
         BarUtils.setStatusBarLightMode(this, !nightModel);
         spinner = findViewById(R.id.tw__spinner);
         webView = findViewById(R.id.tw__web_view);
 
         if (nightModel) {
             setBrightness();
-            webView.getSettings().setJavaScriptEnabled(true);
-
-            webView.setWebViewClient(new WebViewClient() {
-                @Override
-                public void onPageFinished(WebView view, String url) {
-                    super.onPageFinished(view, url);
-                    view.post(() -> view.evaluateJavascript(INVERT_JS, null));
-                }
-            });
         }
 
         final boolean showProgress;
